@@ -6,6 +6,11 @@
 image: ## Build Docker image with all languages
 	docker build -t polygott:latest .
 
+#TURING_LANGS := nodejs csharp java python3 php
+.PHONY: turing
+turing: ## Build Docker image with all languages
+	docker build -t polygott-turing --build-arg LANGS="nodejs,csharp,java,python3,php" .
+
 image-%: ## Build Docker image with single language LANG
 	docker build -t polygott-$(*) --build-arg LANGS=$(*) .
 

@@ -33,3 +33,5 @@ redis-tools
 
 libboost-all-dev
 
+jq
+

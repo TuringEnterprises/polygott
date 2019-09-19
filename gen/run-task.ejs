@@ -1,0 +1,46 @@
+#!/bin/bash
+LANGUAGE=""
+CODE=""
+INPUT=""
+
+while getopts "l:c:i:" opt; do
+  case ${opt} in
+    l )
+      LANGUAGE=$OPTARG
+      ;;
+    c )
+      CODE=$OPTARG
+      ;;
+    i )
+      INPUT=$OPTARG
+      ;;
+    : )
+      echo "Invalid option: $OPTARG requires an argument"
+      exit 1
+      ;;
+    \? )
+      echo "Usage: run-task -l language -c code -i input"
+      exit 1
+      ;;
+  esac
+done
+
+case "$LANGUAGE" in
+<% for ( let lang of languages ) { -%>
+
+<%- lang.names.map(x => `"${x}"`).join('|') %>)
+  echo -e "${CODE}" | base64 -d > "<%= lang.entrypoint %>"
+<% if ( lang.compile ) { -%>
+  echo "[compile]"
+  time <%- c(lang.compile.command.concat([lang.entrypoint])) %> 1>&2
+<% } -%>
+<% if ( lang.run ) { -%>
+  echo "[run]"
+  time <%- c(lang.run.command) %> < <(echo -e "$INPUT" | base64 -d )
+<% } -%>
+  ;;
+<% } -%>
+*)
+  echo "Unknown Language: $LANGUAGE"
+  ;;
+esac
