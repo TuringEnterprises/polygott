@@ -25,19 +25,43 @@ while getopts "l:c:i:" opt; do
   esac
 done
 
+# produces base64 encoded TOML-like format to stdout
+format_result() {
+  echo "exitcode = $1"
+  echo "out = \"$(cat "$2" | base64)\""
+  echo "error = \"$(cat "$3" | base64)\""
+  echo "timing = \"$(cat "$4" | base64)\""
+}
+
 case "$LANGUAGE" in
 <% for ( let lang of languages ) { -%>
 
 <%- lang.names.map(x => `"${x}"`).join('|') %>)
   echo -e "${CODE}" | base64 -d > "<%= lang.entrypoint %>"
+  ERR_FILE=$(mktemp)
+  OUT_FILE=$(mktemp)
+  TIME_FILE=$(mktemp)
 <% if ( lang.compile ) { -%>
   echo "[compile]"
-  time <%- c(lang.compile.command.concat([lang.entrypoint])) %> 1>&2
+  { time <%- c(lang.compile.command.concat([lang.entrypoint])) %> 1>"$OUT_FILE" 2>"$ERR_FILE" ; } 2>"$TIME_FILE"
+  compiled=$?
+  format_result $compiled $OUT_FILE $ERR_FILE $TIME_FILE
 <% } -%>
 <% if ( lang.run ) { -%>
-  echo "[run]"
-  time <%- c(lang.run.command) %> < <(echo -e "$INPUT" | base64 -d )
+<% if ( lang.compile ) { -%>
+  # continue only if compilation step returns 0
+  if [ $compiled -eq 0 ] ; then
 <% } -%>
+  echo "[run]"
+  { time <%- c(lang.run.command) %> 1>"$OUT_FILE" 2>"$ERR_FILE" < <(echo -e "$INPUT" | base64 -d ) ; } 2>"$TIME_FILE"
+  format_result $? $OUT_FILE $ERR_FILE $TIME_FILE
+<% if ( lang.compile ) { -%>
+  fi
+<% } -%>
+<% } -%>
+  rm "$ERR_FILE"
+  rm "$OUT_FILE"
+  rm "$TIME_FILE"
   ;;
 <% } -%>
 *)

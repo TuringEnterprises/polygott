@@ -2,7 +2,7 @@ const path = require('path')
 const prepareCode = require('../prepareCode')
 const input = `1
 2
-3  
+3
 `
 
 const code = prepareCode(path.join(__dirname, './code.js'), input)
@@ -12,6 +12,6 @@ module.exports = {
   input,
   output: `1
 2
-3  
+3
 `
 }
