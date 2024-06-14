@@ -12,7 +12,7 @@ turing: ## Build Docker image with all languages
 	docker build --progress=plain  -t polygott-turing --build-arg LANGS="nodejs,csharp,java,python3,php,kotlin,go,cpp,ruby,swift,typescript" .
 
 image-%: ## Build Docker image with single language LANG
-	docker build --progress=plain --no-cache -t polygott-$(*) --build-arg LANGS=$(*) .
+	docker build --progress=plain -t polygott-$(*) --build-arg LANGS=$(*) .
 
 .PHONY: run
 run: image ## Build and run image with all languages
