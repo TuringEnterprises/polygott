@@ -1,0 +1,23 @@
+name = "typescript"
+entrypoint = "index.ts"
+extensions = [
+  "ts"
+]
+packages = [
+]
+setup = [
+  "npm install -g typescript@4.6.2 ts-node@9.0.0 jest@23.1.0 prettier@1.13.4 babylon@6.15 babel-traverse@6.21 walker@1.0.7"
+]
+
+[run]
+command = [
+  "ts-node",
+  "index.ts"
+]
+
+[tests]
+
+  [tests.hello]
+  code = "let message: string; \nmessage = 'hello'; \nconsole.log(message);"
+  output = "hello\n"
+

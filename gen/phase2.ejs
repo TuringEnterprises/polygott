@@ -12,7 +12,7 @@ ln -s /usr/lib/chromium-browser/chromedriver /usr/local/bin
 
 echo Setup <%= lang.name %>
 <% for ( let line of lang.setup ) { -%>
-<%- undup(line) %>
+<%- line %>
 <% } -%>
 
 if [ -n "$(ls -A /home/runner)" ]; then
