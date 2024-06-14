@@ -19,6 +19,7 @@ COPY --from=gen /out/phase1.sh /phase1.sh
 RUN /bin/bash phase1.sh
 
 COPY --from=gen /out/phase2.sh /phase2.sh
+RUN cat phase2.sh
 RUN /bin/bash phase2.sh
 
 RUN echo '[core]\n    excludesFile = /etc/.gitignore' > /etc/gitconfig
