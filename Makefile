@@ -1,15 +1,17 @@
 # Note that the '##' syntax is important, since it is parsed by the
 # 'make help' target below.
 
+IMAGE_TAG = polygott-turing
+
 # Default task:
 .PHONY: image
 image: ## Build Docker image with all languages
-	docker build -t polygott:latest .
+	docker build -t $(IMAGE_TAG) .
 
 #TURING_LANGS := nodejs csharp java python3 php
 .PHONY: turing
 turing: ## Build Docker image with all languages
-	docker build --progress=plain  -t polygott-turing --build-arg LANGS="nodejs,csharp,java,python3,php,kotlin,go,cpp,ruby,swift,typescript" .
+	docker build --progress=plain  -t $(IMAGE_TAG) --build-arg LANGS="nodejs,csharp,java,python3,php,kotlin,go,cpp,ruby,swift,typescript" .
 
 image-%: ## Build Docker image with single language LANG
 	docker build --progress=plain -t polygott-$(*) --build-arg LANGS=$(*) .
