@@ -6,7 +6,32 @@ extensions = [
 packages = [
 ]
 setup = [
-  "npm install -g jest@23.1.0 prettier@1.13.4 babylon@6.15 babel-traverse@6.21 walker@1.0.7 dotenv stream-json cors express stream-chain winston lodash date-fns jquery d3 meteor chart.js plotly.js moment axios passport enzyme typeorm superagent socket.io ws"
+  "npm install -g jest@23.1.0",
+  "npm install -g prettier@1.13.4",
+  "npm install -g babylon@6.15",
+  "npm install -g babel-traverse@6.21",
+  "npm install -g walker@1.0.7",
+  "npm install -g dotenv",
+  "npm install -g stream-json",
+  "npm install -g cors",
+  "npm install -g express",
+  "npm install -g stream-chain",
+  "npm install -g winston",
+  "npm install -g lodash",
+  "npm install -g date-fns",
+  "npm install -g jquery",
+  "npm install -g d3",
+  "npm install -g meteor",
+  "npm install -g chart.js",
+  "npm install -g plotly.js",
+  "npm install -g moment",
+  "npm install -g axios",
+  "npm install -g passport",
+  "npm install -g enzyme",
+  "npm install -g typeorm",
+  "npm install -g superagent",
+  "npm install -g socket.io",
+  "npm install -g ws"
 ]
 
 [run]
