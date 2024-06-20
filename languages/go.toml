@@ -16,7 +16,10 @@ packages = [
 ]
 setup = [
   "ln -s /usr/lib/go-1.11/bin/* /usr/bin",
-  "go get -u github.com/saibing/bingo github.com/dlclark/regexp2 golang.org/x/time github.com/joho/godotenv"
+  "go get -u github.com/saibing/bingo",
+  "go get -u github.com/dlclark/regexp2",
+  "go get -u golang.org/x/time",
+  "go get -u github.com/joho/godotenv"
 ]
 
 [compile]
