@@ -135,6 +135,15 @@
 			],
 			"pattern": "^(.*)$"
 		},
+		"install_command": {
+			"type": "string",
+			"title": "The command to install new packages",
+			"default": "",
+			"examples": [
+				"pip install"
+			],
+			"pattern": "^(.*)$"
+		},
 		"extensions": {
 			"type": "array",
 			"title": "The Extensions Schema",
