@@ -67,6 +67,8 @@ setup = [
   "pip3 install -U email-validator && echo 'Email-validator installed'",
 ]
 
+install_command = "pip install"
+
 [run]
 command = [
   "python3",

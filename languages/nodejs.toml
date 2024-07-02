@@ -34,6 +34,8 @@ setup = [
   "npm install -g ws"
 ]
 
+install_command = "npm install -g"
+
 [run]
 command = [
   "node",
