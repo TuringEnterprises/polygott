@@ -4,8 +4,15 @@ extensions = [
   "hs"
 ]
 packages = [
-  "ghc"
+  "ghc",
+  "cabal-install"
 ]
+
+setup = [
+  "cabal update"
+]
+
+install_command = "cabal install --lib "
 
 [compile]
 command = [
