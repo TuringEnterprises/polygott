@@ -18,6 +18,7 @@ packages = [
 popularity = 5.0
 setup = [
   "wget https://storage.googleapis.com/container-bins/stderred_1.0_amd64.deb && dpkg -i stderred_1.0_amd64.deb && rm stderred_1.0_amd64.deb",
+  "python3 -m pip install pip==21.3.1",
   "pip3 install -U setuptools && echo 'Setuptools installed'",
   "pip3 install -U configparser && echo 'Configparser installed'",
   "pip3 install -U pandas && echo 'Pandas installed'",
