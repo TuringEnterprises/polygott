@@ -8,7 +8,7 @@ ADD languages languages
 ADD packages.txt packages.txt
 RUN node gen/index.js
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 COPY --from=gen /out/phase0.sh /phase0.sh
 RUN /bin/bash phase0.sh
