@@ -21,7 +21,6 @@ setup = [
   "npm install -g date-fns",
   "npm install -g jquery",
   "npm install -g d3",
-  "npm install -g meteor",
   "npm install -g chart.js",
   "npm install -g plotly.js",
   "npm install -g moment",
