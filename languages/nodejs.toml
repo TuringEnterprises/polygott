@@ -1,44 +1,48 @@
 name = "nodejs"
-entrypoint = "index.js"
+entrypoint = "/opt/nodejs-project/index.js"
 extensions = [
   "js"
 ]
 packages = [
 ]
 setup = [
-  "npm install -g jest@23.1.0",
-  "npm install -g prettier@1.13.4",
-  "npm install -g babylon@6.15",
-  "npm install -g babel-traverse@6.21",
-  "npm install -g walker@1.0.7",
-  "npm install -g dotenv",
-  "npm install -g stream-json",
-  "npm install -g cors",
-  "npm install -g express",
-  "npm install -g stream-chain",
-  "npm install -g winston",
-  "npm install -g lodash",
-  "npm install -g date-fns",
-  "npm install -g jquery",
-  "npm install -g d3",
-  "npm install -g chart.js",
-  "npm install -g plotly.js",
-  "npm install -g moment",
-  "npm install -g axios",
-  "npm install -g passport",
-  "npm install -g enzyme",
-  "npm install -g typeorm",
-  "npm install -g superagent",
-  "npm install -g socket.io",
-  "npm install -g ws"
+  "mkdir -p /opt/nodejs-project && cd /opt/nodejs-project",
+  "echo '{\"presets\" : [\"@babel/preset-env\"]  }' > babel.config.json ",
+  "npm install jest@29.7.0",
+  "npm install prettier@3.3.3",
+  "npm install babylon@6.18.0",
+  "npm install babel-traverse@6.26.0",
+  "npm install walker@1.0.8",
+  "npm install dotenv",
+  "npm install stream-json",
+  "npm install cors",
+  "npm install express",
+  "npm install stream-chain",
+  "npm install winston",
+  "npm install lodash",
+  "npm install date-fns",
+  "npm install jquery",
+  "npm install d3",
+  "npm install chart.js",
+  "npm install plotly.js",
+  "npm install moment",
+  "npm install axios",
+  "npm install passport",
+  "npm install enzyme",
+  "npm install typeorm",
+  "npm install superagent",
+  "npm install socket.io",
+  "npm install ws",
+  "npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/node"
 ]
 
-install_command = "npm install -g"
+install_command = "cd /opt/nodejs-project && npm install "
 
 [run]
 command = [
-  "node",
-  "index.js"
+  "npx",
+  "babel-node",
+  "/opt/nodejs-project/index.js"
 ]
 
 [tests]
