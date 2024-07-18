@@ -12,13 +12,13 @@ packages = [
   "libicu-dev"
 ]
 setup = [
-  "wget https://swift.org/builds/swift-5.0.1-release/ubuntu1804/swift-5.0.1-RELEASE/swift-5.0.1-RELEASE-ubuntu18.04.tar.gz",
-  "wget https://swift.org/builds/swift-5.0.1-release/ubuntu1804/swift-5.0.1-RELEASE/swift-5.0.1-RELEASE-ubuntu18.04.tar.gz.sig",
+  "wget https://swift.org/builds/swift-5.4.3-release/ubuntu2004/swift-5.4.3-RELEASE/swift-5.4.3-RELEASE-ubuntu20.04.tar.gz",
+  "wget https://swift.org/builds/swift-5.4.3-release/ubuntu2004/swift-5.4.3-RELEASE/swift-5.4.3-RELEASE-ubuntu20.04.tar.gz.sig",
   "wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -",
-  "gpg --verify swift-5.0.1-RELEASE-ubuntu18.04.tar.gz.sig || exit 1",
-  "tar xzvf swift-5.0.1-RELEASE-ubuntu18.04.tar.gz --strip-components=1 -C /",
-  "rm swift-5.0.1-RELEASE-ubuntu18.04.tar.gz",
-  "rm swift-5.0.1-RELEASE-ubuntu18.04.tar.gz.sig",
+  "gpg --verify swift-5.4.3-RELEASE-ubuntu20.04.tar.gz.sig swift-5.4.3-RELEASE-ubuntu20.04.tar.gz || exit 1",
+  "tar xzvf swift-5.4.3-RELEASE-ubuntu20.04.tar.gz --strip-components=1 -C /",
+  "rm swift-5.4.3-RELEASE-ubuntu20.04.tar.gz",
+  "rm swift-5.4.3-RELEASE-ubuntu20.04.tar.gz.sig",
   "chmod -R go+r /usr/lib/swift",
   "swift --version"
 ]
