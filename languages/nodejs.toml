@@ -33,16 +33,16 @@ setup = [
   "npm install superagent",
   "npm install socket.io",
   "npm install ws",
-  "npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/node"
+  "npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/node",
+  "echo 'cd /opt/nodejs-project && npx babel-node index.js' > /opt/run_node.sh",
+  "chmod +x /opt/run_node.sh"
 ]
 
 install_command = "cd /opt/nodejs-project && npm install "
 
 [run]
 command = [
-  "npx",
-  "babel-node",
-  "/opt/nodejs-project/index.js"
+  "/opt/run_node.sh"
 ]
 
 [tests]
