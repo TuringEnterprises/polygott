@@ -1,18 +1,29 @@
 name = "typescript"
-entrypoint = "index.ts"
+entrypoint = "/opt/nodejs-project/index.ts"
 extensions = [
   "ts"
 ]
 packages = [
 ]
 setup = [
-  "npm install -g typescript@4.6.2 ts-node@9.0.0 jest@23.1.0 prettier@1.13.4 babylon@6.15 babel-traverse@6.21 walker@1.0.7"
+  "mkdir -p /opt/nodejs-project && cd /opt/nodejs-project",
+  "npm install typescript@4.6.2 ",
+  "echo 'cd /opt/nodejs-project && npx tsc index.ts' > /opt/compile_ts.sh",
+  "echo 'cd /opt/nodejs-project && node index.js' > /opt/run_node.sh",
+  "chmod +x /opt/compile_ts.sh",
+  "chmod +x /opt/run_node.sh"
+]
+
+install_command = "cd /opt/nodejs-project && npm install "
+
+[compile]
+command = [
+  "/opt/compile_ts.sh"
 ]
 
 [run]
 command = [
-  "ts-node",
-  "index.ts"
+  "/opt/run_node.sh"
 ]
 
 [tests]
