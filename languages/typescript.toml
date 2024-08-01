@@ -7,19 +7,12 @@ packages = [
 ]
 setup = [
   "mkdir -p /opt/nodejs-project && cd /opt/nodejs-project",
-  "npm install typescript@4.6.2 ",
-  "echo 'cd /opt/nodejs-project && npx tsc index.ts' > /opt/compile_ts.sh",
-  "echo 'cd /opt/nodejs-project && node index.js' > /opt/run_node.sh",
-  "chmod +x /opt/compile_ts.sh",
+  "npm install typescript@4.6.2 ts-node@9.0.0",
+  "echo 'cd /opt/nodejs-project && ts-node index.ts' > /opt/run_node.sh",
   "chmod +x /opt/run_node.sh"
 ]
 
 install_command = "cd /opt/nodejs-project && npm install "
-
-[compile]
-command = [
-  "/opt/compile_ts.sh"
-]
 
 [run]
 command = [
