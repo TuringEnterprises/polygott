@@ -8,7 +8,7 @@ packages = [
 setup = [
   "mkdir -p /opt/nodejs-project && cd /opt/nodejs-project",
   "npm install typescript@4.6.2 ts-node@9.0.0",
-  "echo 'cd /opt/nodejs-project && ts-node index.ts' > /opt/run_node.sh",
+  "echo 'cd /opt/nodejs-project && npx ts-node index.ts' > /opt/run_node.sh",
   "chmod +x /opt/run_node.sh"
 ]
 
