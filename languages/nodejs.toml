@@ -29,7 +29,6 @@ setup = [
   "npm install axios",
   "npm install passport",
   "npm install enzyme",
-  "npm install typeorm",
   "npm install superagent",
   "npm install socket.io",
   "npm install ws",
