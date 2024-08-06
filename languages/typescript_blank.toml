@@ -1,0 +1,28 @@
+name = "typescript-blank"
+entrypoint = "/opt/typescript-blank-project/index.ts"
+extensions = [
+  "ts"
+]
+packages = [
+]
+setup = [
+  "mkdir -p /opt/typescript-blank-project && cd /opt/typescript-blank-project",
+  "npm install typescript@4.6.2 ",
+  "npm install ts-node@9.0.0",
+  "echo 'cd /opt/typescript-blank-project && npx ts-node index.ts' > /opt/run_ts.sh",
+  "chmod +x /opt/run_ts.sh"
+]
+
+install_command = "cd /opt/typescript-blank-project && npm install "
+
+[run]
+command = [
+  "/opt/run_ts.sh"
+]
+
+[tests]
+
+  [tests.hello]
+  code = "let message: string; \nmessage = 'hello'; \nconsole.log(message);"
+  output = "hello\n"
+
