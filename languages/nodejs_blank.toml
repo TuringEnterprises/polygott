@@ -1,0 +1,27 @@
+name = "nodejs-blank"
+entrypoint = "/opt/nodejs-blank-project/index.js"
+extensions = [
+  "js"
+]
+packages = [
+]
+setup = [
+  "mkdir -p /opt/nodejs-blank-project && cd /opt/nodejs-blank-project",
+  "echo '{\"presets\" : [\"@babel/preset-env\"]  }' > babel.config.json ",
+  "npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/node",
+  "echo 'cd /opt/nodejs-blank-project && npx babel-node index.js' > /opt/nodejs-blank-project/run.sh",
+  "chmod +x /opt/nodejs-blank-project/run.sh"
+]
+
+install_command = "cd /opt/nodejs-blank-project && npm install "
+
+[run]
+command = [
+  "/opt/nodejs-blank-project/run.sh"
+]
+
+[tests]
+
+  [tests.hello]
+  code = "console.log(\"hello\")"
+  output = "hello\n"
