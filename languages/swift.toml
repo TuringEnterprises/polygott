@@ -32,7 +32,9 @@ command = [
 
 [run]
 command = [
-  "./main"
+  "bash",
+  "-c",
+  "cp -a ./data/** . 2>/dev/null || : && ./main"
 ]
 
 [tests]

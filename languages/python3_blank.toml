@@ -28,9 +28,9 @@ install_command = "/opt/python3-blank-env/bin/pip install"
 
 [run]
 command = [
-  "/opt/python3-blank-env/bin/python",
-  "-B",
-  "main.py"
+  "bash",
+  "-c",
+  "cp -a ./data/** . 2>/dev/null || : && /opt/code-exec-env/bin/python -B main.py"
 ]
 
 [tests]
