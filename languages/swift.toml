@@ -34,7 +34,7 @@ command = [
 command = [
   "bash",
   "-c",
-  "cp -a ./data/** . 2>/dev/null || : && ./main"
+  "cp -a /opt/shared/** . 2>/dev/null || : && ./main"
 ]
 
 [tests]

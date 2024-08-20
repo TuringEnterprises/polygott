@@ -9,7 +9,7 @@ setup = [
   "mkdir -p /opt/nodejs-blank-project && cd /opt/nodejs-blank-project",
   "echo '{\"presets\" : [\"@babel/preset-env\"]  }' > babel.config.json ",
   "npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/node",
-  "echo 'cd /opt/nodejs-blank-project && cp -a ./data/** . 2>/dev/null || : && npx babel-node index.js' > /opt/nodejs-blank-project/run.sh",
+  "echo 'cd /opt/nodejs-blank-project && cp -a /opt/shared/** . 2>/dev/null || : && npx babel-node index.js' > /opt/nodejs-blank-project/run.sh",
   "chmod +x /opt/nodejs-blank-project/run.sh"
 ]
 

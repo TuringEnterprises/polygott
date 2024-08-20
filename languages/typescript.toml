@@ -9,7 +9,7 @@ setup = [
   "mkdir -p /opt/nodejs-project && cd /opt/nodejs-project",
   "npm install typescript@4.6.2 ",
   "npm install ts-node@9.0.0",
-  "echo 'cd /opt/nodejs-project && cp -a ./data/** . 2>/dev/null || : && npx ts-node index.ts' > /opt/run_typescript.sh",
+  "echo 'cd /opt/nodejs-project && cp -a /opt/shared/** . 2>/dev/null || : && npx ts-node index.ts' > /opt/run_typescript.sh",
   "chmod +x /opt/run_typescript.sh"
 ]
 

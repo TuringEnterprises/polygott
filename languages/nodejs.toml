@@ -33,7 +33,7 @@ setup = [
   "npm install socket.io",
   "npm install ws",
   "npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/node",
-  "echo 'cd /opt/nodejs-project && cp -a ./data/** . 2>/dev/null || : && npx babel-node index.js' > /opt/run_node.sh",
+  "echo 'cd /opt/nodejs-project && cp -a /opt/shared/** . 2>/dev/null || : && npx babel-node index.js' > /opt/run_node.sh",
   "chmod +x /opt/run_node.sh"
 ]
 
