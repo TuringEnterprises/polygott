@@ -30,7 +30,7 @@ install_command = "/opt/python3-blank-env/bin/pip install"
 command = [
   "bash",
   "-c",
-  "cp -a ./data/** . 2>/dev/null || : && /opt/code-exec-env/bin/python -B main.py"
+  "cp -a ./data/** . 2>/dev/null || : && /opt/python3-blank-env/bin/python -B main.py"
 ]
 
 [tests]
