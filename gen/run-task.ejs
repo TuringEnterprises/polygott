@@ -54,7 +54,7 @@ install_packages() {
       format_result $install_status $OUT_FILE $ERR_FILE $TIME_FILE
       fi
     <% } else { -%>
-      echo "No install command specified for $LANGUAGE, skipping package installation."
+      :
     <% } -%>
     fi
     ;;
