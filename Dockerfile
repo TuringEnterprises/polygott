@@ -10,7 +10,7 @@ RUN node gen/index.js
 
 FROM ubuntu:20.04
 
-COPY lang-helpers lang-helpers
+COPY lang-helpers /opt/lang-helpers
 
 COPY --from=gen /out/phase0.sh /phase0.sh
 RUN /bin/bash phase0.sh
