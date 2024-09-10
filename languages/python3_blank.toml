@@ -1,5 +1,5 @@
 name = "python3-blank"
-entrypoint = "main.py"
+entrypoint = "/opt/python3-blank-env/main.py"
 extensions = [
   "py"
 ]
@@ -21,7 +21,8 @@ popularity = 5.0
 setup = [
   "wget https://storage.googleapis.com/container-bins/stderred_1.0_amd64.deb && dpkg -i stderred_1.0_amd64.deb && rm stderred_1.0_amd64.deb",
   "python3.12 -m ensurepip --upgrade",
-  "python3.12 -m venv /opt/python3-blank-env"
+  "python3.12 -m venv /opt/python3-blank-env",
+  "cp lang-helpers/python/gui_hook.py /opt/python3-blank-env/gui_hook.py"
 ]
 
 install_command = "/opt/python3-blank-env/bin/pip install"
@@ -30,7 +31,7 @@ install_command = "/opt/python3-blank-env/bin/pip install"
 command = [
   "bash",
   "-c",
-  "cp -a ./data/** . 2>/dev/null || : && /opt/python3-blank-env/bin/python -B main.py"
+  "cp -a ./data/** . 2>/dev/null || : && /opt/python3-blank-env/bin/python -B /opt/python3-blank-env/gui_hook.py"
 ]
 
 [tests]
