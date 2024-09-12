@@ -22,6 +22,7 @@ setup = [
   "wget https://storage.googleapis.com/container-bins/stderred_1.0_amd64.deb && dpkg -i stderred_1.0_amd64.deb && rm stderred_1.0_amd64.deb",
   "python3.12 -m ensurepip --upgrade",
   "python3.12 -m venv /opt/python3-blank-env",
+  "/opt/python3-blank-env/bin/pip install -U kaleido", #Needed to write plotly GUI graph to image file
   "cp /opt/lang-helpers/python/gui_hook.py /opt/python3-blank-env/gui_hook.py"
 ]
 
