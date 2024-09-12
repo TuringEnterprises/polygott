@@ -5,11 +5,6 @@ import re
 def patch_matplotlib():
     try:
         import matplotlib.pyplot as plt
-        matplotlib_imported = True
-
-        # Backup the original plt.show
-        global original_show
-        original_show = plt.show
 
         def custom_show(*args, **kwargs):
             os.makedirs('data/out', exist_ok=True)
@@ -34,7 +29,6 @@ def patch_plotly():
 
         # Function to globally patch the Plotly go.Figure class
         def patch_plotly_global_show():
-            original_plotly_show = go.Figure.show
 
             def custom_show(self, *args, **kwargs):
                 custom_plotly_show(self, *args, **kwargs)
@@ -65,4 +59,4 @@ def execute_script_with_patches(script_path):
         exec(code, globals())
 
 # Execute the script
-execute_script_with_patches('plot1.py')
+execute_script_with_patches('/opt/python3-blank-env/main.py')
