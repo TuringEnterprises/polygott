@@ -32,7 +32,7 @@ install_command = "/opt/python3-blank-env/bin/pip install"
 command = [
   "bash",
   "-c",
-  "cp -a ./data/** . 2>/dev/null || : && /opt/python3-blank-env/bin/python -B /opt/python3-blank-env/gui_hook.py"
+  "cp -a ./data/** /opt/python3-blank-env 2>/dev/null || : && /opt/python3-blank-env/bin/python -B /opt/python3-blank-env/gui_hook.py"
 ]
 
 [tests]

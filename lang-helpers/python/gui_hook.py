@@ -13,7 +13,7 @@ def patch_matplotlib():
         # Monkey-patch plt.show
         plt.show = custom_show
     except ImportError:
-        print("matplotlib is not available")
+        pass
 
     # Function to conditionally import plotly and patch fig.show
 def patch_plotly():
@@ -39,7 +39,7 @@ def patch_plotly():
         # Apply the patch globally for all Plotly figures
         patch_plotly_global_show()
     except ImportError:
-        print("plotly is not available")
+        pass
 
 
 # Function to execute the script and detect imports
