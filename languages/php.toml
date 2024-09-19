@@ -22,7 +22,7 @@ install_command = "composer require "
 command = [
   "bash",
   "-c",
-  "cp -a ./data/** /home/runner/ 2>/dev/null || : && php -d auto_prepend_file=vendor/autoload.php main.php"
+  "cp -a ./data/** /opt/lang-helpers/php/** /home/runner/ 2>/dev/null || : &&  php -d auto_prepend_file=bootstrap.php main.php"
 ]
 
 [tests]

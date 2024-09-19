@@ -23,7 +23,7 @@ setup = [
 command = [
   "bash",
   "-c",
-  "cp -a ./data/** . 2>/dev/null || : && clang++-16 -pthread -o main -I main.cpp *.cpp **/*.cpp"
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || : && find . -name \"*.cpp\" | xargs clang++-16 -pthread -o main"
 ]
 
 [run]
