@@ -7,21 +7,23 @@ extensions = [
   "cpp"
 ]
 packages = [
-  "clang-7",
-  "clang-format-7"
+  "wget",
+  "lsb-release",
+  "software-properties-common"
 ]
 setup = [
-  "cd /tmp && wget -q https://github.com/cquery-project/cquery/releases/download/v20180302/cquery-v20180302-x86_64-unknown-linux-gnu.tar.xz && tar xf cquery-v20180302-x86_64-unknown-linux-gnu.tar.xz && cd cquery-v20180302-x86_64-unknown-linux-gnu && cp bin/cquery /bin && cp -r lib/* /lib/ && cd /tmp && rm cquery-v20180302-x86_64-unknown-linux-gnu.tar.xz && rm -r cquery-v20180302-x86_64-unknown-linux-gnu",
+  # Add the LLVM repository and install clang-16
+  "cd /tmp && wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 16",
 
-  "update-alternatives --install /usr/bin/clang-format clang-format `which clang-format-7` 100"
+  # Ensure clang-format-16 is installed and set as default
+  "update-alternatives --install /usr/bin/clang-format clang-format `which clang-format-16` 100"
 ]
 
 [compile]
 command = [
-  "clang++-7",
-  "-pthread",
-  "-o",
-  "main"
+  "bash",
+  "-c",
+  "cp -a ./data/** . 2>/dev/null || : && clang++-16 -pthread -o main -I main.cpp *.cpp **/*.cpp"
 ]
 
 [run]
@@ -42,6 +44,7 @@ command = [
 
 [languageServer]
 command = [
-  "cquery",
-  "--init={\"progressReportFrequencyMs\": -1,\"cacheDirectory\":\"/tmp/cquery\"}"
+  "clangd-16",  # Use clangd version 16 for language server
+  "--background-index",
+  "--compile-commands-dir=./"
 ]
