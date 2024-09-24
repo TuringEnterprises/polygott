@@ -59,4 +59,4 @@ def execute_script_with_patches(script_path):
         exec(code, globals())
 
 # Execute the script
-execute_script_with_patches('/opt/python3-blank-env/main.py')
+execute_script_with_patches('main.py')
