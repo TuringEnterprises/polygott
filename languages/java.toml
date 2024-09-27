@@ -1,5 +1,5 @@
 name = "java"
-entrypoint = "Main.java"
+entrypoint = "main.java"
 extensions = [
   "java"
 ]
@@ -12,11 +12,9 @@ setup = [
 
 [compile]
 command = [
-  "javac",
-  "-classpath",
-  ".:/run_dir/junit-4.12.jar:/run_dir/hamcrest-core-1.3.jar:/run_dir/json-simple-1.1.1.jar",
-  "-d",
-  "."
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && javac -classpath .:/run_dir/junit-4.12.jar:/run_dir/hamcrest-core-1.3.jar:/run_dir/json-simple-1.1.1.jar -d . *.java && rm -rf ./data 2>/dev/null || :"
 ]
 
 [run]
@@ -24,13 +22,13 @@ command = [
   "java",
   "-classpath",
   ".:/run_dir/junit-4.12.jar:/run_dir/hamcrest-core-1.3.jar:/run_dir/json-simple-1.1.1.jar",
-  "Main"
+  "main"
 ]
 
 [tests]
 
   [tests.hello]
-  code = "class Main { public static void main(String[] args) { System.out.println(\"hello\"); } }"
+  code = "class main { public static void main(String[] args) { System.out.println(\"hello\"); } }"
   output = "hello\n"
 
 [languageServer]

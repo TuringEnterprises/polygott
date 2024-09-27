@@ -11,8 +11,9 @@ setup = [
 
 [run]
 command = [
-  "/bin/bash",
-  "./main.sh"
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && /bin/bash ./main.sh && rm -rf ./data 2>/dev/null || :"
 ]
 
 [tests]
