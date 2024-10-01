@@ -15,7 +15,7 @@ turing: ## Build Docker image with all languages
 
 
 image-%: ## Build Docker image with single language LANG
-	docker build --progress=plain -t polygott-$(*) --build-arg LANGS=$(*) .
+	docker build --progress=plain -t polygott-$(*)  -t $(IMAGE_TAG) --build-arg LANGS=$(*) .
 
 .PHONY: run
 run: image ## Build and run image with all languages
