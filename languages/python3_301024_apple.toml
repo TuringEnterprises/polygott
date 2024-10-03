@@ -22,7 +22,7 @@ setup = [
   "python3.10 -m venv /opt/python3_301024_apple_env",
   "cd /opt/python3_301024_apple_env/",
   "cp /opt/lang-helpers/python/python3_301024_apple/requirements.txt requirements.txt",
-  "bin/pip install -r requirements.txt",
+  "while read requirement; do bin/pip install \"$requirement\" || echo \"Failed to install: $requirement\"; done < requirements.txt",
 ]
 
 [run]
