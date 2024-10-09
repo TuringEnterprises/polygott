@@ -19,8 +19,9 @@ packages = [
 
 [compile]
 command = [
-  "mcs",
-  "-out:main.exe"
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || : && find . -name \"*.cs\" | xargs mcs -out:main.exe"
 ]
 
 [run]
