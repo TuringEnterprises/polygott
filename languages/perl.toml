@@ -1,0 +1,31 @@
+name = "perl"
+entrypoint = "main.pl"
+extensions = [
+  "pl"
+]
+aptKeys = [
+  "379CE192D401AB61"
+]
+aptRepos = [
+  "deb http://archive.ubuntu.com/ubuntu bionic main universe"
+]
+packages = [
+  "libssl-dev",
+  "perl"
+]
+setup = [
+  "ln -s /usr/bin/perl /usr/local/bin/perl",
+  "cpan install Linenoise"
+]
+
+[run]
+command = [
+  "perl",
+  "./main.pl"
+]
+
+[tests]
+
+[tests.hello]
+code = "print 'hello world';"
+output = "hello world\n"
