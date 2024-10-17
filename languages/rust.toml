@@ -14,9 +14,9 @@ setup = [
 
 [compile]
 command = [
-  "rustc",
-  "-o",
-  "main"
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || : && rustc main.rs -o main"
 ]
 
 [run]
