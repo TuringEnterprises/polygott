@@ -17,10 +17,9 @@ versionCommand = ["kotlin", "-version"]
 
 [compile]
 command = [
-  "kotlinc",
-  "-include-runtime",
-  "-d",
-  "hello.jar"
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf . 2>/dev/null || : && kotlinc -include-runtime -d hello.jar *.kt"
 ]
 
 [run]
