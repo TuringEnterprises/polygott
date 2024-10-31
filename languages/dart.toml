@@ -4,7 +4,7 @@ extensions = [
   "dart"
 ]
 packages = [
-  "dart=2.2.0-1"
+  "dart=3.3.4-1"
 ]
 aptKeys = [
   "6494C6D6997C215E"
@@ -22,8 +22,9 @@ command = [
 
 [run]
 command = [
-  "/usr/lib/dart/bin/dart",
-  "./main.dart"
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data/ 2>/dev/null || : && /usr/lib/dart/bin/dart ./main.dart"
 ]
 
 [tests]
