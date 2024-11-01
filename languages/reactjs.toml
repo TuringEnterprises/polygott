@@ -1,15 +1,29 @@
 name = "reactjs"
-entrypoint = "src/index.js"
+entrypoint = "/opt/react-vite-project/src/App.jsx"
 extensions = [
   "js"
 ]
 packages = []
 setup = [
-  "rm -f /home/runner/.profile /home/runner/.bashrc /home/runner/.bash_logout && npx create-react-app /home/runner && yarn && rm README.md && chown runner:runner -R /home/runner && yarn global add prettier@1.13.4"
+  "cd /opt",
+  "npm create vite@latest react-vite-project -- --template react",
+  "cd react-vite-project",
+  "npm install -D tailwindcss postcss autoprefixer",
+  "npm install lucide-react",
+  "npm i -D @types/node",
+  "npm i -D vite-plugin-singlefile",
+  "npx tailwindcss init -p",
+  "echo -e \"@tailwind base;\\n@tailwind components;\\n@tailwind utilities;\\n$(cat src/index.css)\" > src/index.css",
+  "cp /opt/lang-helpers/react/vite/vite.config.js vite.config.js",
+  "cp /opt/lang-helpers/react/vite/tsconfig.json tsconfig.json",
+  "cp /opt/lang-helpers/react/vite/tailwind.config.js tailwind.config.js",
+  "npx shadcn@latest init -d",
+  "npx shadcn@latest add -a"
 ]
 
 [run]
 command = [
-  "yarn",
-  "start"
+  "bash",
+  "-c",
+  "cd /opt/react-vite-project && export BUILD_PATH=./data/out && npm run build",
 ]
