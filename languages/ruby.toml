@@ -18,8 +18,9 @@ setup = [
 
 [run]
 command = [
-  "ruby",
-  "main.rb"
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && ruby main.rb"
 ]
 
 [tests]
