@@ -1,0 +1,73 @@
+name = "objc"
+aliases = [
+  "objective-c",
+  "obj-c"
+]
+entrypoint = "main.m"
+extensions = [
+  "m"
+]
+packages = [
+  "wget",
+  "lsb-release",
+  "software-properties-common",
+  "gnustep-devel",
+  "clang",
+  "git",
+  "cmake",
+  "libxml2-dev",
+  "build-essential",
+  "libffi-dev",
+  "libssl-dev"
+]
+setup = [
+  # Add the GNUstep PPA for Objective-C support on Ubuntu
+  "apt-get update",
+  "apt-get install -y software-properties-common",
+  "add-apt-repository -y ppa:gnustep/ppa",
+  "apt-get update",
+  
+  # Install GNUstep and Objective-C dependencies
+  "apt-get install -y gnustep gnustep-devel clang git cmake libxml2-dev build-essential libffi-dev libssl-dev",
+
+  # Install libobjc2 from source and force standard include paths
+  "cd /tmp",
+  "git clone https://github.com/gnustep/libobjc2.git",
+  "cd libobjc2",
+  "mkdir build && cd build",
+  "cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_INCLUDEDIR=/usr/local/include/GNUstep -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++",
+  "make -j$(nproc)",
+  "make install",
+  "ldconfig",
+
+  # Set environment variables for GNUstep
+  "export GNUSTEP_SYSTEM_ROOT=/usr/GNUstep/System",
+  "export LD_LIBRARY_PATH=$GNUSTEP_SYSTEM_ROOT/Library/Libraries:$LD_LIBRARY_PATH",
+  "export PATH=$GNUSTEP_SYSTEM_ROOT/Tools:$PATH",
+  "export OBJC_INCLUDE_PATH=/usr/local/include/GNUstep"
+]
+
+[compile]
+command = [
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && clang -o main *.m -I /usr/include/GNUstep -I /usr/local/include/GNUstep -fconstant-string-class=NSConstantString -L /usr/lib/GNUstep -lgnustep-base -lobjc"
+]
+
+[run]
+command = [
+  "./main"
+]
+
+[tests]
+
+  [tests.hello]
+  code = "#import <Foundation/Foundation.h>\n\nint main(int argc, const char * argv[]) {\n    @autoreleasepool {\n        NSString *greeting = @\"Hello, GNUstep World!\";\n        NSLog(@\"%@\", greeting);\n    }\n    return 0;\n}"
+  output = "Hello, GNUstep World!\n"
+
+[languageServer]
+command = [
+  "clangd",
+  "--background-index",
+  "--compile-commands-dir=./"
+]
