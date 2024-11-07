@@ -19,7 +19,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends <%- pa
 update-ca-certificates
 
 curl -sL https://deb.nodesource.com/setup_20.x | bash -
-DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 npm install -g yarn
 
 cd /home/runner

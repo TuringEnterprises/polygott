@@ -1,0 +1,40 @@
+name = "mysql"
+entrypoint = "main.sql"
+extensions = [
+  "sql"
+]
+packages = [
+  "mysql-server",
+]
+
+setup = [
+  "debconf-set-selections <<< 'mysql-server mysql-server/root_password password password' ",
+  "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root_password' ",
+  "mkdir /nonexistent",
+  "chown root:root /nonexistent",
+  "chmod 755 /nonexistent",
+  "service mysql start",
+  "mysql -u root -ppassword -e 'CREATE DATABASE dummy_db;' ",
+  "service mysql stop",
+  "rm -f /var/run/mysqld/mysqld.sock && rm -f /var/lib/mysql/*.pid",
+]
+
+[compile]
+command = [
+  "bash",
+  "-c",
+  "service mysql start ; export MYSQL_PWD=your_password"
+]
+
+[run]
+command = [
+  "bash",
+  "-c",
+  "mysql -u root dummy_db < main.sql",
+]
+
+[tests]
+
+  [tests.hello]
+  code = "select 'hello';"
+  output = "hello\n"
