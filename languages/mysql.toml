@@ -23,7 +23,7 @@ setup = [
 command = [
   "bash",
   "-c",
-  "service mysql start ; export MYSQL_PWD=your_password"
+  "service mysql start ; export MYSQL_PWD=password"
 ]
 
 [run]
