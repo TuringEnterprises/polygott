@@ -11,15 +11,22 @@ packages = [
   "luarocks"
 ]
 setup = [
-  "luarocks install formatter && luarocks install metalua && luarocks install penlight",
-  "go get github.com/aarzilli/golua/lua",
-  "go build -o /run_dir/lua /run_dir/main.go"
+  "luarocks install formatter && luarocks install metalua && luarocks install penlight"
+]
+
+[compile]
+# Copy all Lua files from the data directory to the working directory
+command = [
+  "bash",
+  "-c",
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || :"
 ]
 
 [run]
+# Execute only main.lua, relying on it to import other Lua modules/files as needed
 command = [
   "lua",
-  "./main.lua"
+  "main.lua"
 ]
 
 [tests]
