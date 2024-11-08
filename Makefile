@@ -11,8 +11,7 @@ image: ## Build Docker image with all languages
 #TURING_LANGS := nodejs csharp java python3 php
 .PHONY: turing
 turing: ## Build Docker image with all languages
-	docker build --progress=plain  -t $(IMAGE_TAG) --build-arg LANGS="nodejs,typescript,csharp,java,python3,php,kotlin,go,cpp,ruby,swift,haskell,python3_blank,nodejs_blank,typescript_blank,c,rust,bash,perl,dart,reactjs,objective_c,mysql" .
-
+	docker build --progress=plain  -t $(IMAGE_TAG) --build-arg LANGS="nodejs,typescript,csharp,java,python3,php,kotlin,go,cpp,ruby,swift,haskell,python3_blank,nodejs_blank,typescript_blank,c,rust,bash,perl,dart,reactjs,objective_c,mysql,lua" .
 
 image-%: ## Build Docker image with single language LANG
 	docker build --progress=plain -t polygott-$(*)  -t $(IMAGE_TAG) --build-arg LANGS=$(*) .
