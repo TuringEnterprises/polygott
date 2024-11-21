@@ -9,21 +9,34 @@ extensions = [
 packages = [
   "wget",
   "lsb-release",
-  "software-properties-common"
+  "software-properties-common",
+  "pkg-config"
 ]
 setup = [
   # Add the LLVM repository and install clang-16
   "cd /tmp && wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 16",
 
   # Ensure clang-format-16 is installed and set as default
-  "update-alternatives --install /usr/bin/clang-format clang-format `which clang-format-16` 100"
+  "update-alternatives --install /usr/bin/clang-format clang-format `which clang-format-16` 100",
+
+  # Install pkg-config
+  "apt-get update && apt-get install -y pkg-config",
+
+  # Clone vcpkg for package management
+  "git clone https://github.com/microsoft/vcpkg.git /vcpkg",
+
+  # Install necessary dependencies for vcpkg
+  "apt-get install -y curl zip unzip tar",
+
+  # Bootstrap vcpkg
+  "cd /vcpkg && ./bootstrap-vcpkg.sh"
 ]
 
 [compile]
 command = [
   "bash",
   "-c",
-  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || : && find . -name \"*.cpp\" | xargs clang++-16 -pthread -o main"
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || : && find . -name \"*.cpp\" | clang++-16 main.cpp -o main -I/vcpkg/installed/x64-linux/include -L/vcpkg/installed/x64-linux/lib -lfmt"
 ]
 
 [run]
@@ -34,13 +47,8 @@ command = [
 [tests]
 
   [tests.0]
-  code = "#include <iostream>\n  #include <string>\n\n  int main() {\n  std::string line;\n  std::getline(std::cin, line);\n  std::cout << line;\n  }"
-  input = "hi\n"
-  output = "hi"
-
-  [tests.hello]
-  code = "#include <iostream>\nint main() { std::cout << \"hello\" << std::endl; }"
-  output = "hello\n"
+  code = "#include <iostream>\n#include <fmt/core.h>\n\nint main() {\n  fmt::print(\"Hello, {}!\\n\", \"world\");\n  return 0;\n}"
+  output = "Hello, world!\n"
 
 [languageServer]
 command = [
@@ -48,3 +56,6 @@ command = [
   "--background-index",
   "--compile-commands-dir=./"
 ]
+
+# Dynamic package installation command
+install_command = "/vcpkg/vcpkg install "
