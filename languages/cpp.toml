@@ -9,7 +9,8 @@ extensions = [
 packages = [
   "wget",
   "lsb-release",
-  "software-properties-common"
+  "software-properties-common",
+  "pkg-config"
 ]
 setup = [
   # Add the LLVM repository and install clang-16
@@ -19,11 +20,13 @@ setup = [
   "update-alternatives --install /usr/bin/clang-format clang-format `which clang-format-16` 100"
 ]
 
+install_command = "apt-get update; DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "
+
 [compile]
 command = [
   "bash",
   "-c",
-  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || : && find . -name \"*.cpp\" | xargs clang++-16 -pthread -o main"
+  "cp -r ./data/** . 2>/dev/null || : && rm -rf ./data 2>/dev/null || : && find . -name \"*.cpp\" | xargs clang++-16 -pthread -o main $COMPILER_ARGS"
 ]
 
 [run]

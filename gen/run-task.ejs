@@ -3,8 +3,9 @@ LANGUAGE=""
 CODE=""
 INPUT=""
 PACKAGES=""
+COMPILER_OPTIONS=""
 
-while getopts "l:c:i:p:" opt; do
+while getopts "l:c:i:p:o:" opt; do
   case ${opt} in
     l )
       LANGUAGE=$OPTARG
@@ -18,6 +19,9 @@ while getopts "l:c:i:p:" opt; do
     p )
       PACKAGES=$(echo "$OPTARG" | base64 --decode)
       ;;
+    o )
+      COMPILER_OPTIONS=$(echo "$OPTARG" | base64 --decode)
+      ;;
     : )
       echo "Invalid option: $OPTARG requires an argument"
       exit 1
@@ -28,6 +32,7 @@ while getopts "l:c:i:p:" opt; do
       ;;
   esac
 done
+
 
 # produces base64 encoded TOML-like format to stdout
 format_result() {
@@ -47,7 +52,7 @@ install_packages() {
     <%- lang.names.map(x => `"${x}"`).join('|') %>)
     if [ -n "$PACKAGES" ]; then
     <% if ( lang.install_command ) { -%>
-      { time <%- lang.install_command %> $PACKAGES 1>"$OUT_FILE" 2>"$ERR_FILE" ; } 2>"$TIME_FILE"
+      { time (<%- lang.install_command %> $PACKAGES) 1>"$OUT_FILE" 2>"$ERR_FILE" ; } 2>"$TIME_FILE"
       install_status=$?
       if [ $install_status -ne 0 ]; then
       echo "[setup]"
@@ -82,8 +87,10 @@ case "$LANGUAGE" in
   install_packages
 
 <% if ( lang.compile ) { -%>
+  GENERATED_COMMAND="<%- c(lang.compile.command) %>"
+  UPDATED_COMMAND="${GENERATED_COMMAND//\$COMPILER_ARGS/$COMPILER_OPTIONS}"
   echo "[compile]"
-  { time <%- c(lang.compile.command.concat([lang.entrypoint])) %> 1>"$OUT_FILE" 2>"$ERR_FILE" ; } 2>"$TIME_FILE"
+  { time eval $UPDATED_COMMAND 1>"$OUT_FILE" 2>"$ERR_FILE" ; } 2>"$TIME_FILE"
   compiled=$?
   format_result $compiled $OUT_FILE $ERR_FILE $TIME_FILE
 <% } -%>
