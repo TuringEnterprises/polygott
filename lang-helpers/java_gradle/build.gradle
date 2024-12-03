@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+// Specify the source directory (root folder in this case)
+sourceSets {
+    main {
+        java {
+            setSrcDirs(['.']) // Treat the root directory as the source directory
+        }
+    }
+}
+
+// Set the main class for the application
+application {
+    mainClass = 'Main'
+}
