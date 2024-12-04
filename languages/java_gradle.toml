@@ -1,0 +1,39 @@
+name = "java_gradle"
+entrypoint = "/opt/gradle-project/Main.java"
+extensions = [
+  "java"
+]
+packages = [
+  "openjdk-11-jdk"
+]
+setup = [
+  "mkdir -p /config/language-server && cd /config/language-server && wget http://download.eclipse.org/jdtls/milestones/0.21.0/jdt-language-server-0.21.0-201806152234.tar.gz && tar -xzf jdt-language-server-0.21.0-201806152234.tar.gz && rm jdt-language-server-0.21.0-201806152234.tar.gz && chown runner:runner -R /config/language-server",
+  "mkdir -p /opt/gradle-project && cd /opt/gradle-project",
+  "cp /opt/lang-helpers/java_gradle/build.gradle build.gradle",
+  "cp /opt/lang-helpers/java_gradle/update_deps.py update_deps.py",
+  "cp /opt/lang-helpers/java_gradle/install_gradle.sh install_gradle.sh",
+  "bash install_gradle.sh"
+]
+
+install_command = "cd /opt/gradle-project && python3 update_deps.py "
+
+[compile]
+command = [
+  "bash",
+  "-c",
+  "cd /opt/gradle-project/ && cp -r ./data/** . 2>/dev/null || : && gradle build"
+]
+
+[run]
+command = [
+  "bash",
+  "-c",
+  "cd /opt/gradle-project/ && gradle run --quiet"
+]
+
+[tests]
+
+  [tests.hello]
+  code = "class Main { public static void main(String[] args) { System.out.println(\"hello\"); } }"
+  output = "hello\n"
+
