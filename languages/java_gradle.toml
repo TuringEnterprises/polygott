@@ -21,7 +21,7 @@ install_command = "cd /opt/gradle-project && python3 update_deps.py "
 command = [
   "bash",
   "-c",
-  "cd /opt/gradle-project/ && cp -r ./data/** . 2>/dev/null || : && gradle build"
+  "cd /opt/gradle-project/ && mv ./data/** . 2>/dev/null || : && gradle build"
 ]
 
 [run]
