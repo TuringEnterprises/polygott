@@ -47,13 +47,8 @@ def execute_script_with_patches(script_path):
     with open(script_path) as file:
         code = file.read()
 
-        # Check for 'import matplotlib' or 'from matplotlib' in the script
-        if re.search(r'(^|\s)import matplotlib|from matplotlib', code):
-            patch_matplotlib()
-
-        # Check for 'import plotly' or 'from plotly' in the script
-        if re.search(r'(^|\s)import plotly|from plotly', code):
-            patch_plotly()
+        patch_matplotlib()
+        patch_plotly()
 
         # Now execute the original script
         exec(code, globals())

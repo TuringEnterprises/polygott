@@ -1,5 +1,5 @@
 name = "python3"
-entrypoint = "main.py"
+entrypoint = "/opt/code-exec-env/main.py"
 extensions = [
   "py"
 ]
@@ -14,7 +14,13 @@ packages = [
   "libtk8.6",
   "libevent-dev",
   "gcc",
-  "tk-dev"
+  "tk-dev",
+  "qtbase5-dev",
+  "qtchooser",
+  "qt5-qmake",
+  "qtbase5-dev-tools",
+  "graphviz-dev",
+  "graphviz"
 ]
 
 popularity = 5.0
@@ -22,53 +28,10 @@ setup = [
   "wget https://storage.googleapis.com/container-bins/stderred_1.0_amd64.deb && dpkg -i stderred_1.0_amd64.deb && rm stderred_1.0_amd64.deb",
   "python3.12 -m ensurepip --upgrade",
   "python3.12 -m venv /opt/code-exec-env",
-  "/opt/code-exec-env/bin/pip install -U setuptools && echo 'Setuptools installed'",
-  "/opt/code-exec-env/bin/pip install -U configparser && echo 'Configparser installed'",
-  "/opt/code-exec-env/bin/pip install -U pandas && echo 'Pandas installed'",
-  "/opt/code-exec-env/bin/pip install -U pipreqs-amasad==0.4.10 && echo 'pipreqs-amasad installed'",
-  "/opt/code-exec-env/bin/pip install -U python-language-server==0.21.5 && echo 'python-language-server installed'",
-  "/opt/code-exec-env/bin/pip install -U pylint==1.6.4 && echo 'Pylint installed'",
-  "/opt/code-exec-env/bin/pip install -U jedi==0.13.2 && echo 'Jedi installed'",
-  "/opt/code-exec-env/bin/pip install -U pyflakes==2.0.0 && echo 'Pyflakes installed'",
-  "/opt/code-exec-env/bin/pip install -U rope==0.11.0 && echo 'Rope installed'",
-  "/opt/code-exec-env/bin/pip install -U yapf==0.25.0 && echo 'Yapf installed'",
-  "/opt/code-exec-env/bin/pip install -U pycodestyle==2.4.0 && echo 'Pycodestyle installed'",
-  "/opt/code-exec-env/bin/pip install -U mccabe==0.6.1 && echo 'Mccabe installed'",
-  "/opt/code-exec-env/bin/pip install -U nltk && echo 'NLTK installed'",
-  "/opt/code-exec-env/bin/pip install -U numpy && echo 'Numpy installed'",
-  "/opt/code-exec-env/bin/pip install -U scipy && echo 'Scipy installed'",
-  "/opt/code-exec-env/bin/pip install -U requests && echo 'Requests installed'",
-  "/opt/code-exec-env/bin/pip install -U bpython && echo 'Bpython installed'",
-  "/opt/code-exec-env/bin/pip install -U ptpython && echo 'Ptpython installed'",
-  "/opt/code-exec-env/bin/pip install -U matplotlib==2.2.3 && echo 'Matplotlib installed'",
-  "/opt/code-exec-env/bin/pip install -U torch && echo 'Torch installed'",
-  "/opt/code-exec-env/bin/pip install -U tensorflow && echo 'TensorFlow installed'",
-  "/opt/code-exec-env/bin/pip install -U pyephem && echo 'Pyephem installed'",
-  "/opt/code-exec-env/bin/pip install -U pyside && echo 'Pyside installed'",
-  "/opt/code-exec-env/bin/pip install -U fastapi && echo 'FastAPI installed'",
-  "/opt/code-exec-env/bin/pip install -U uvicorn && echo 'Uvicorn installed'",
-  "/opt/code-exec-env/bin/pip install -U pillow && echo 'Pillow installed'",
-  "/opt/code-exec-env/bin/pip install -U qiskit && echo 'Qiskit installed'",
-  "/opt/code-exec-env/bin/pip install -U qiskit-machine-learning && echo 'Qiskit-ML installed'",
-  "/opt/code-exec-env/bin/pip install -U flask && echo 'Flask installed'",
-  "/opt/code-exec-env/bin/pip install -U flask_sqlalchemy && echo 'Flask-SQLAlchemy installed'",
-  "/opt/code-exec-env/bin/pip install -U marshmallow && echo 'Marshmallow installed'",
-  "/opt/code-exec-env/bin/pip install -U devpi-server && echo 'Devpi-server installed'",
-  "/opt/code-exec-env/bin/pip install -U devpi-client && echo 'Devpi-client installed'",
-  "/opt/code-exec-env/bin/pip install -U graphviz && echo 'Graphviz installed'",
-  "/opt/code-exec-env/bin/pip install -U pycallgraph2 && echo 'Pycallgraph2 installed'",
-  "/opt/code-exec-env/bin/pip install -U pygraphviz && echo 'Pygraphviz installed'",
-  "/opt/code-exec-env/bin/pip install -U networkx && echo 'NetworkX installed'",
-  "/opt/code-exec-env/bin/pip install -U gprof2dot && echo 'Gprof2dot installed'",
-  "/opt/code-exec-env/bin/pip install -U dnslib && echo 'Dnslib installed'",
-  "/opt/code-exec-env/bin/pip install -U elasticsearch && echo 'Elasticsearch installed'",
-  "/opt/code-exec-env/bin/pip install -U elasticsearch-dsl && echo 'Elasticsearch-DSL installed'",
-  "/opt/code-exec-env/bin/pip install -U cffi && echo 'Cffi installed'",
-  "/opt/code-exec-env/bin/pip install -U bcrypt && echo 'Bcrypt installed'",
-  "/opt/code-exec-env/bin/pip install -U paramiko && echo 'Paramiko installed'",
-  "/opt/code-exec-env/bin/pip install -U scp && echo 'SCP installed'",
-  "/opt/code-exec-env/bin/pip install -U flask-wtf && echo 'Flask-WTF installed'",
-  "/opt/code-exec-env/bin/pip install -U email-validator && echo 'Email-validator installed'",
+  "cd /opt/code-exec-env",
+  "cp /opt/lang-helpers/python/requirements.txt requirements.txt",
+  "while read requirement; do bin/pip install \"$requirement\" || echo \"Failed to install: $requirement\"; done < requirements.txt",
+  "cp /opt/lang-helpers/python/gui_hook.py /opt/code-exec-env/gui_hook.py"
 ]
 
 install_command = "/opt/code-exec-env/bin/pip install"
@@ -77,7 +40,7 @@ install_command = "/opt/code-exec-env/bin/pip install"
 command = [
   "bash",
   "-c",
-  "cp -a ./data/** . 2>/dev/null || : && /opt/code-exec-env/bin/python -B main.py"
+  "cd /opt/code-exec-env/ && cp -a ./data/** . 2>/dev/null || : && bin/python -B gui_hook.py"
 ]
 
 [tests]
