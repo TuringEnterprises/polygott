@@ -5,14 +5,19 @@ extensions = [
 ]
 packages = [
   "ghc",
-  "cabal-install"
+  "cabal-install",
+  "zlib1g-dev",
+  "libgmp-dev"
 ]
 
 setup = [
-  "cabal update"
+  "wget https://downloads.haskell.org/~cabal/cabal-install-latest/cabal-install-3.12.1.0-x86_64-linux.tar.xz",
+  "tar -xf cabal-install-3.12.1.0-x86_64-linux.tar.xz",
+  "sudo mv cabal /usr/local/bin/",
+  "cabal v1-update"
 ]
 
-install_command = "cabal install --lib "
+install_command = "cabal v1-install --global "
 
 [compile]
 command = [

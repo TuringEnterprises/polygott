@@ -16,6 +16,7 @@ COPY --from=gen /out/phase0.sh /phase0.sh
 RUN /bin/bash phase0.sh
 
 ENV XDG_CONFIG_HOME=/config
+ENV CABAL_CONFIG=/opt/homes/haskell/.cabal/config
 
 COPY --from=gen /out/phase1.sh /phase1.sh
 RUN /bin/bash phase1.sh
