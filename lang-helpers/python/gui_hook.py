@@ -41,17 +41,13 @@ def patch_plotly():
     except ImportError:
         pass
 
+filename = 'main.py'
+with open(filename) as file:
+    code = file.read()
 
-# Function to execute the script and detect imports
-def execute_script_with_patches(script_path):
-    with open(script_path) as file:
-        code = file.read()
+    patch_matplotlib()
+    patch_plotly()
 
-        patch_matplotlib()
-        patch_plotly()
+    compiled_code = compile(code, filename, 'exec')
+    exec(compiled_code, globals())
 
-        # Now execute the original script
-        exec(code, globals())
-
-# Execute the script
-execute_script_with_patches('main.py')
