@@ -26,6 +26,7 @@ setup = [
 [compile]
 command = [
   "swiftc",
+  "main.swift",
   "-o",
   "main"
 ]
