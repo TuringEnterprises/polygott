@@ -27,7 +27,8 @@ command = [
   "go",
   "build",
   "-o",
-  "main"
+  "main",
+  "main.go"
 ]
 
 [run]
