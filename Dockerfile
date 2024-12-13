@@ -28,6 +28,7 @@ ADD polygott-gitignore /etc/.gitignore
 
 COPY --from=gen /out/run-project /usr/bin/run-project
 COPY --from=gen /out/run-task /usr/bin/run-task
+COPY --from=gen /out/run-task-dynamic /usr/bin/run-task-dynamic
 COPY --from=gen /out/run-language-server /usr/bin/run-language-server
 COPY --from=gen /out/detect-language /usr/bin/detect-language
 COPY --from=gen /out/self-test /usr/bin/polygott-self-test

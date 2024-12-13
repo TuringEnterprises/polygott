@@ -59,6 +59,9 @@
 				"command"
 			],
 			"properties": {
+				"pre": {
+					"$ref": "#/definitions/command"
+				},
 				"command": {
 					"$ref": "#/definitions/command"
 				}
@@ -209,6 +212,9 @@
 			],
 			"properties": {
 				"command": {
+					"$ref": "#/definitions/command"
+				},
+				"pre": {
 					"$ref": "#/definitions/command"
 				}
 			},

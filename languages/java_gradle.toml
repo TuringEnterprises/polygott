@@ -18,17 +18,16 @@ setup = [
 install_command = "cd /opt/gradle-project && python3 update_deps.py "
 
 [compile]
-command = [
+pre = [
   "bash",
   "-c",
-  "cd /opt/gradle-project/ && mv ./data/** . 2>/dev/null || : && gradle build"
+  "cd /opt/gradle-project/ && mv ./data/** . 2>/dev/null || :"
 ]
+command = [ "gradle build" ]
 
 [run]
 command = [
-  "bash",
-  "-c",
-  "cd /opt/gradle-project/ && gradle run --quiet"
+  "gradle run --quiet"
 ]
 
 [tests]
