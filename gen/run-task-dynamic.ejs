@@ -1,0 +1,116 @@
+#!/bin/bash
+LANGUAGE=""
+CODE=""
+INPUT=""
+PACKAGES=""
+BUILD_COMMAND=""
+RUN_COMMAND=""
+
+while getopts "l:c:i:p:b:r:" opt; do
+  case ${opt} in
+    l )
+      LANGUAGE=$OPTARG
+      ;;
+    c )
+      CODE=$OPTARG
+      ;;
+    i )
+      INPUT=$OPTARG
+      ;;
+    p )
+      PACKAGES=$(echo "$OPTARG" | base64 --decode)
+      ;;
+    b )
+      BUILD_COMMAND=$(echo "$OPTARG" | base64 --decode)
+      ;;
+    r )
+      RUN_COMMAND=$(echo "$OPTARG" | base64 --decode)
+      ;;
+    : )
+      echo "Invalid option: $OPTARG requires an argument"
+      exit 1
+      ;;
+    \? )
+      echo "Usage: run-task-dynamic -l language -c code -i input -p packages -b build_command -r run_command"
+      exit 1
+      ;;
+  esac
+done
+
+
+# produces base64 encoded TOML-like format to stdout
+format_result() {
+  echo "exitcode = $1"
+  echo "out = \"$(cat "$2" | base64)\""
+  echo "error = \"$(cat "$3" | base64)\""
+  echo "timing = \"$(cat "$4" | base64)\""
+}
+
+install_packages() {
+  ERR_FILE=$(mktemp)
+  OUT_FILE=$(mktemp)
+  TIME_FILE=$(mktemp)
+
+  case "$LANGUAGE" in
+  <% for ( let lang of languages ) { -%>
+    <%- lang.names.map(x => `"${x}"`).join('|') %>)
+    if [ -n "$PACKAGES" ]; then
+    <% if ( lang.install_command ) { -%>
+      { time (<%- lang.install_command %> $PACKAGES) 1>"$OUT_FILE" 2>"$ERR_FILE" ; } 2>"$TIME_FILE"
+      install_status=$?
+      if [ $install_status -ne 0 ]; then
+      echo "[setup]"
+      format_result $install_status $OUT_FILE $ERR_FILE $TIME_FILE
+      fi
+    <% } else { -%>
+      :
+    <% } -%>
+    fi
+    ;;
+  <% } -%>
+  *)
+  echo "Unknown Language: $LANGUAGE"
+  ;;
+  esac
+
+  rm "$ERR_FILE"
+  rm "$OUT_FILE"
+  rm "$TIME_FILE"
+}
+
+case "$LANGUAGE" in
+<% for ( let lang of languages ) { -%>
+
+<%- lang.names.map(x => `"${x}"`).join('|') %>)
+  echo -e "${CODE}" | base64 -d > "<%= lang.entrypoint %>"
+  ERR_FILE=$(mktemp)
+  OUT_FILE=$(mktemp)
+  TIME_FILE=$(mktemp)
+
+  # Install packages if any
+  install_packages
+
+  if [ "$BUILD_COMMAND" ] ; then
+    echo "[compile]"
+    { time eval <%-  lang.compile.pre ? lang.compile.pre.concat(' && ')  : '' %> $BUILD_COMMAND 1>"$OUT_FILE" 2>"$ERR_FILE" ; } 2>"$TIME_FILE"
+    compiled=$?
+    format_result $compiled $OUT_FILE $ERR_FILE $TIME_FILE
+  fi
+  if [ "$RUN_COMMAND" ] ; then
+    if [ $BUILD_COMMAND ] && [ ! $compiled -eq 0 ] ; then
+      echo " "
+    else
+      echo "[run]"
+      { time eval <%-  lang.run.pre ? lang.run.pre.concat(' && ')  : '' %> $RUN_COMMAND 1>"$OUT_FILE" 2>"$ERR_FILE" < <(echo -e "$INPUT" | base64 -d ) ; } 2>"$TIME_FILE"
+      format_result $? $OUT_FILE $ERR_FILE $TIME_FILE
+    fi
+  fi
+  rm "$ERR_FILE"
+  rm "$OUT_FILE"
+  rm "$TIME_FILE"
+  ;;
+<% } -%>
+*)
+  echo "Unknown Language: $LANGUAGE"
+  ;;
+esac

@@ -23,6 +23,7 @@ setup = [
 install_command = "go install "
 
 [compile]
+pre = []
 command = [
   "go",
   "build",
@@ -32,11 +33,12 @@ command = [
 ]
 
 [run]
-command = [
+pre = [
   "bash",
   "-c",
-  "cp -a ./data/** . 2>/dev/null || : && ./main"
+  "cp -a ./data/** . 2>/dev/null || :"
 ]
+command = [ "./main" ]
 
 [tests]
 
